@@ -1,80 +1,81 @@
 'use strict';
 
-// ── Tab Switching ──────────────────────────────────────────────
+// ── Tab Switching ─────────────────────────────────────────────
 function switchTab(tab) {
   const loginView  = document.getElementById('view-login');
   const signinView = document.getElementById('view-signin');
-  const tabLogin   = document.getElementById('tab-login');
-  const tabSignin  = document.getElementById('tab-signin');
+
+  // All tab buttons (desktop + mobile)
+  const allLoginTabs  = document.querySelectorAll('#tab-login, #mob-tab-login');
+  const allSigninTabs = document.querySelectorAll('#tab-signin, #mob-tab-signin');
 
   if (tab === 'login') {
     loginView.classList.remove('hidden');
     signinView.classList.add('hidden');
-    tabLogin.classList.add('active');
-    tabSignin.classList.remove('active');
-    // Reset sign-in form
+    allLoginTabs.forEach(t => t.classList.add('active'));
+    allSigninTabs.forEach(t => t.classList.remove('active'));
     document.getElementById('signinForm').reset();
   } else {
     signinView.classList.remove('hidden');
     loginView.classList.add('hidden');
-    tabSignin.classList.add('active');
-    tabLogin.classList.remove('active');
-    // Reset login form
+    allSigninTabs.forEach(t => t.classList.add('active'));
+    allLoginTabs.forEach(t => t.classList.remove('active'));
     document.getElementById('loginForm').reset();
   }
+
+  // Scroll right panel to top (mobile)
+  const rp = document.querySelector('.right-panel');
+  if (rp) rp.scrollTop = 0;
 }
 
-// ── Toast Notification ─────────────────────────────────────────
-let toastTimer = null;
+// ── Toast ─────────────────────────────────────────────────────
+let toastTimer;
 
-function showToast(message, isError = false) {
+function showToast(msg, isError = false) {
   const toast = document.getElementById('toast');
-  toast.textContent = message;
+  toast.textContent = msg;
   toast.style.background = isError ? '#c0392b' : '#b5306e';
   toast.classList.add('show');
-
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => toast.classList.remove('show'), 3200);
 }
 
-// ── Login Form ────────────────────────────────────────────────
+// ── Login ─────────────────────────────────────────────────────
 function handleLogin(e) {
   e.preventDefault();
   const btn = e.target.querySelector('.btn-primary');
-  btn.textContent = '...';
+  const original = btn.textContent;
+  btn.textContent = '•••';
   btn.disabled = true;
 
   setTimeout(() => {
-    btn.textContent = 'LOGIN';
+    btn.textContent = original;
     btn.disabled = false;
     showToast('✓ Login berhasil! Selamat datang kembali.');
   }, 1000);
 }
 
-// ── Register / Sign In Form ────────────────────────────────────
+// ── Register ─────────────────────────────────────────────────
 function handleSignin(e) {
   e.preventDefault();
-
-  const inputs    = e.target.querySelectorAll('input');
-  const name      = inputs[0].value.trim();
-  const email     = inputs[1].value.trim();
-  const password  = inputs[2].value;
-  const confirm   = inputs[3].value;
-
-  if (password !== confirm) {
-    showToast('✗ Password dan konfirmasi tidak cocok.', true);
-    inputs[3].focus();
-    return;
-  }
+  const inputs   = e.target.querySelectorAll('input');
+  const name     = inputs[0].value.trim();
+  const password = inputs[2].value;
+  const confirm  = inputs[3].value;
 
   if (password.length < 6) {
     showToast('✗ Password minimal 6 karakter.', true);
     inputs[2].focus();
     return;
   }
+  if (password !== confirm) {
+    showToast('✗ Konfirmasi password tidak cocok.', true);
+    inputs[3].focus();
+    return;
+  }
 
   const btn = e.target.querySelector('.btn-primary');
-  btn.textContent = '...';
+  btn.textContent = '•••';
   btn.disabled = true;
 
   setTimeout(() => {
@@ -82,15 +83,11 @@ function handleSignin(e) {
     btn.disabled = false;
     showToast(`✓ Akun untuk ${name} berhasil dibuat!`);
     e.target.reset();
-    // Optionally switch back to login after a short delay
     setTimeout(() => switchTab('login'), 1800);
   }, 1000);
 }
 
-// ── Social Buttons ────────────────────────────────────────────
-document.querySelectorAll('.social-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const platform = btn.textContent.trim();
-    showToast(`Menghubungkan ke ${platform}...`);
-  });
-});
+// ── Social Login ──────────────────────────────────────────────
+function socialLogin(platform) {
+  showToast(`Menghubungkan ke ${platform}…`);
+}
