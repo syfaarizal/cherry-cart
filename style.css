@@ -1,0 +1,375 @@
+/* ===========================
+   RESET & BASE
+=========================== */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --pink:      #b5306e;
+  --pink-dark: #922558;
+  --pink-mid:  #c94080;
+  --pink-light:#d96090;
+  --pink-pale: #e8a0c0;
+  --white:     #ffffff;
+  --text:      #444444;
+  --subtext:   #999999;
+  --border:    #e0e0e0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8e0ec 0%, #fce8f3 50%, #f0d0e8 100%);
+}
+
+/* ===========================
+   CARD
+=========================== */
+.card {
+  display: flex;
+  width: min(820px, 95vw);
+  min-height: 440px;
+  background: var(--white);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 30px 80px rgba(181, 48, 110, 0.20),
+              0 8px 24px rgba(0,0,0,0.08);
+}
+
+/* ===========================
+   LEFT PANEL
+=========================== */
+.left-panel {
+  position: relative;
+  width: 260px;
+  flex-shrink: 0;
+  background: var(--pink);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+/* Material design layered diamond shapes */
+.shape {
+  position: absolute;
+  border-radius: 28px;
+  transform: rotate(45deg);
+}
+
+.s1 {
+  width: 300px; height: 300px;
+  background: rgba(255,255,255,0.07);
+  top: -90px; left: -100px;
+}
+.s2 {
+  width: 240px; height: 240px;
+  background: rgba(255,255,255,0.09);
+  top: -50px; left: -60px;
+}
+.s3 {
+  width: 280px; height: 280px;
+  background: rgba(255,255,255,0.06);
+  bottom: -90px; left: -110px;
+}
+.s4 {
+  width: 220px; height: 220px;
+  background: rgba(255,255,255,0.10);
+  bottom: -50px; left: -55px;
+}
+.s5 {
+  width: 100px; height: 100px;
+  background: rgba(255,255,255,0.08);
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+/* ===========================
+   TABS (on left panel)
+=========================== */
+.tabs {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  position: relative;
+  z-index: 10;
+}
+
+.tab {
+  position: relative;
+  background: transparent;
+  border: none;
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  cursor: pointer;
+  padding: 14px 32px 14px 20px;
+  color: rgba(255,255,255,0.65);
+  transition: color 0.3s;
+  text-align: left;
+}
+
+.tab.active {
+  background: var(--white);
+  color: var(--text);
+  border-radius: 30px 0 0 30px;
+  /* push it slightly right to "connect" to right panel */
+  margin-right: -1px;
+  padding-right: 28px;
+  box-shadow: -4px 0 16px rgba(0,0,0,0.08);
+}
+
+.tab:not(.active):hover {
+  color: rgba(255,255,255,0.90);
+}
+
+/* ===========================
+   RIGHT PANEL
+=========================== */
+.right-panel {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 48px;
+  overflow: hidden;
+}
+
+/* ===========================
+   FORM VIEWS
+=========================== */
+.form-view {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: fadeSlideIn 0.35s ease;
+}
+
+.form-view.hidden {
+  display: none;
+}
+
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Avatar */
+.avatar {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: var(--pink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 20px rgba(181,48,110,0.35);
+  margin-bottom: 10px;
+}
+
+/* Title */
+.form-title {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: var(--pink);
+  margin-bottom: 22px;
+}
+
+/* Form */
+form {
+  width: 100%;
+}
+
+/* Two-column row for sign-in */
+.fields-row {
+  display: flex;
+  gap: 16px;
+}
+
+.fields-row .field {
+  flex: 1;
+}
+
+/* Input field */
+.field {
+  display: flex;
+  align-items: center;
+  border-bottom: 1.5px solid var(--border);
+  margin-bottom: 18px;
+  padding-bottom: 8px;
+  transition: border-color 0.25s;
+}
+
+.field:focus-within {
+  border-bottom-color: var(--pink);
+}
+
+.field-icon {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+
+.field input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  color: var(--text);
+  background: transparent;
+  min-width: 0;
+}
+
+.field input::placeholder {
+  color: var(--subtext);
+  font-size: 13px;
+}
+
+/* Row helpers */
+.row-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 4px;
+}
+
+.row-end {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 4px;
+}
+
+/* Forgot password link */
+.link-forgot {
+  font-size: 11.5px;
+  color: var(--pink);
+  text-decoration: none;
+  font-weight: 500;
+  transition: opacity 0.2s;
+}
+.link-forgot:hover { opacity: 0.75; }
+
+/* Primary button */
+.btn-primary {
+  background: var(--pink);
+  color: var(--white);
+  border: none;
+  padding: 10px 30px;
+  border-radius: 30px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.8px;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(181,48,110,0.35);
+  transition: background 0.25s, box-shadow 0.25s, transform 0.1s;
+}
+.btn-primary:hover {
+  background: var(--pink-dark);
+  box-shadow: 0 6px 22px rgba(181,48,110,0.45);
+}
+.btn-primary:active { transform: scale(0.97); }
+
+/* Divider */
+.divider {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin: 20px 0 14px;
+  gap: 12px;
+}
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+.divider span {
+  font-size: 11px;
+  color: var(--subtext);
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+/* Social row */
+.social-row {
+  display: flex;
+  gap: 14px;
+}
+
+.social-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 20px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  background: var(--white);
+  font-family: 'Poppins', sans-serif;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--text);
+  cursor: pointer;
+  transition: border-color 0.25s, box-shadow 0.25s, transform 0.1s;
+}
+.social-btn:hover {
+  border-color: #ccc;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.09);
+}
+.social-btn:active { transform: scale(0.97); }
+
+/* ===========================
+   TOAST NOTIFICATION
+=========================== */
+.toast {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--pink);
+  color: var(--white);
+  padding: 12px 28px;
+  border-radius: 30px;
+  font-size: 13px;
+  font-weight: 500;
+  box-shadow: 0 8px 24px rgba(181,48,110,0.30);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s, transform 0.3s;
+  white-space: nowrap;
+  z-index: 9999;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ===========================
+   RESPONSIVE
+=========================== */
+@media (max-width: 600px) {
+  .card { flex-direction: column; width: 95vw; min-height: unset; }
+  .left-panel { width: 100%; height: 120px; justify-content: center; }
+  .tabs { flex-direction: row; }
+  .tab.active { border-radius: 30px 30px 0 0; margin-right: 0; margin-bottom: -1px; padding: 12px 24px; }
+  .right-panel { padding: 28px 24px 32px; }
+  .fields-row { flex-direction: column; gap: 0; }
+}
