@@ -1,4 +1,4 @@
-# Login App — React + TypeScript + Tailwind CSS
+# Login App — Cherry Cart
 
 ## Tech Stack
 - **React 18** + **TypeScript**
@@ -10,7 +10,7 @@
 ## Struktur File
 
 ```
-login-app/
+cherrycart/
 ├── index.html
 ├── package.json
 ├── vite.config.ts
